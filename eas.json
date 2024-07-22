@@ -1,0 +1,17 @@
+{
+  "build": {
+    "production": {
+      "node": "18.18.0"
+      
+    },
+    "preview": {
+      "extends": "production",
+      "distribution": "internal"
+    },
+    "development": {
+      "extends": "production",
+      "developmentClient": true,
+      "distribution": "internal"
+    }
+  }
+}

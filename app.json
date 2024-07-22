@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "Bot or Not!",
+    "slug": "Hello",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/imgpsh_fullsize_anim.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/imgpsh_fullsize_anim.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.abdurrehman1510980.Hello"
+      
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      
+      "eas": {
+        "projectId": "827d3837-563b-458c-90a6-74ca8c6e7dcc"
+      }
+    }
+      
+    },
+    "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-7037675035390273~8485653502"}
+
+  }
+  
+
