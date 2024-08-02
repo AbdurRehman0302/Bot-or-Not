@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Animated, Image, BackHandler } from 'react-native';
+import { View, Text, StyleSheet, Animated, Image, BackHandler, StatusBar } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BannerAd, BannerAdSize, TestIds, AdEventType } from 'react-native-google-mobile-ads';
 
-const adUnitId = 'ca-app-pub-7037675035390273/7747324897';
+const adUnitId =__DEV__? TestIds.BANNER : 'ca-app-pub-7037675035390273/7747324897';
 
 const StartChatScreen = () => {
   const navigation = useNavigation();
@@ -62,6 +62,8 @@ const StartChatScreen = () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#333" barStyle="light-content" />
+
       <View style={styles.header}>
         <View style={styles.headerContainer}>
           <Image
@@ -70,7 +72,7 @@ const StartChatScreen = () => {
             resizeMode="contain"
           />
           <View style={styles.headerTextContainer}>
-            <Text style={styles.headerText}>Bot or Not!</Text>
+            <Text style={styles.headerText}>Human or AI!</Text>
           </View>
           <Text style={styles.timerText}>02:00</Text>
         </View>
@@ -152,7 +154,7 @@ const styles = StyleSheet.create({
     paddingTop: 0,
   },
   headerContainer: {
-    height: 90,
+    height: 80,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -165,7 +167,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: 40,
     height: 40,
-    marginRight: 10, // Adjust margin as needed
+    marginRight: 5, // Adjust margin as needed
   },
   headerTextContainer: {
     flex: 1,

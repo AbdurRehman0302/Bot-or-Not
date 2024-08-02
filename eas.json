@@ -2,7 +2,6 @@
   "build": {
     "production": {
       "node": "18.18.0"
-      
     },
     "preview": {
       "extends": "production",
@@ -13,5 +12,8 @@
       "developmentClient": true,
       "distribution": "internal"
     }
+  },
+  "cli": {
+    "appVersionSource": "remote"
   }
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -9,11 +9,11 @@ import {
   TestIds,
 } from 'react-native-google-mobile-ads';
 
-const adUnitId = 'ca-app-pub-7037675035390273/7436495404';
+const adUnitId = __DEV__? TestIds.INTERSTITIAL : 'ca-app-pub-7037675035390273/7436495404';
 
 const SplashScreen = () => {
   const navigation = useNavigation();
-  const title = 'Bot or Not!';
+  const title = 'Human or AI!';
   const [loading, setLoading] = useState(true);
   const adRef = useRef(
     InterstitialAd.createForAdRequest(adUnitId, {
@@ -22,6 +22,7 @@ const SplashScreen = () => {
   );
 
   useEffect(() => {
+    console.log('__DEV__', __DEV__);
     const loadInterstitial = () => {
       adRef.current?.load();
       setLoading(false);
@@ -64,13 +65,17 @@ const SplashScreen = () => {
   const handleStartGame = () => {
     if (adRef.current?.loaded) {
       adRef.current?.show();
+      console.log('__DEV__:', __DEV__);
     } else {
+      console.log('__DEV__:', __DEV__);
       navigation.navigate('StartChat');
     }
   };
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#000" barStyle="light-content" />
+
       <Animatable.Image
         source={require('./assets/imgpsh_fullsize_anim.png')}
         animation="fadeIn"

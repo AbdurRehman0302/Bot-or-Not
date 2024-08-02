@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ScrollView, Animated, Alert, TouchableOpacity, Image, Modal } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, ScrollView, Animated, Alert, TouchableOpacity, Image, Modal, StatusBar } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,7 +11,7 @@ import {
   TestIds,
 } from 'react-native-google-mobile-ads';
 
-const adUnitId ='ca-app-pub-7037675035390273/7436495404';
+const adUnitId = __DEV__? TestIds.INTERSTITIAL : 'ca-app-pub-7037675035390273/7436495404';
 
 const ChatScreen = () => {
   const navigation = useNavigation();
@@ -169,13 +169,13 @@ const ChatScreen = () => {
           {
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer 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',
+              'Authorization': 'Bearer sk-proj-PrGniX4KkqG4DIOkkFdsT3BlbkFJDhBcVWF5RuYsR4btAfOo',
             },
           }
         );
 
         const botResponse = res.data.choices[res.data.choices.length - 1].message.content;
-        const adjustedResponse = adjustBotResponse(botResponse);
+        const adjustedResponse = (botResponse);
 
         setTimeout(() => {
           const updatedMessages = newMessages.filter(msg => !msg.isTyping);
@@ -282,208 +282,240 @@ const ChatScreen = () => {
 
   const humanResponses = (input) => {
     const humanTraits = {
-      greetings: [
-        "Hey there! How can I halp you today?",
-        "Hello! What can I asist yu with?",
-        "Hi! Whats on your mind?",
-        "Hey, good to see yu! What's up?",
-        "Helo! How's yur day going so far?",
-        "Hi ther! How can I make yur day better?",
-        "Hey! Redy to chat about anyting?",
-        "Hello! Let's dive into your questons!",
-        "Hi! What brngs you hear today?",
-        "Hey, nice to meat you! How can I asist you?",
-      ],
-      identity: [
-        "I'm jus someone here to chat with yu.",
-        "Yu can call me Dave!",
-        "I'm a frendly chat companian.",
-        "You can think of me as your freind.",
-        "I'm hear to help you out.",
-        "I'm your go-to chat parter rite now.",
-        "I'm here to provide suport and answrs.",
-        "Yu've found me! What's on your mind?",
-        "I'm yur freind and want to talk to you!",
-        "I'm here to make yur day a littel eaiser.",
-      ],
-      feelings: [
-        "I'm doin great, thanks for asking! How bout you?",
-        "I'm hear and redy to chat! How are yu?",
-        "I'm feeling gud. What's new with yu?",
-        "I'm doin well, thanks! How can I asist yu today?",
-        "I'm grate! What can I help yu with?",
-        "I'm feeling awsome! Redy for our chat?",
-        "I'm gud, thanks for asking. What's on yur mind?",
-        "I'm doin fine, how about yorself?",
-        "I'm here and feeling positve! What about yu?",
-        "I'm feeling fantastic! What can I do for yu?",
-      ],
-      activities: [
-        "I'm here to chat with yu and answer yur questons.",
-        "I'm jus hanging out, redy to asist yu.",
-        "I'm here, ready to help yu with anything yu need.",
-        "I'm avaiable to chat and provide suport.",
-        "I'm here to make yur day a bit eaiser.",
-        "I'm here to asist yu with whatevr yu need.",
-        "I'm redy to chat and help yu out.",
-        "I'm jus here to be yur chat buddy.",
-        "I'm here to help and chat with yu.",
-        "I'm here to provide ansers and asistence.",
-      ],
-      hobbies: [
-        "I love reading boks. What's your favrite bok?",
-        "I enjoy watching movis. Any recomendations?",
-        "I like to go for long waks. Do you enjoy waling?",
-        "I spend my fre time painting. Do yu like art?",
-        "I'm a fan of cooking. What's yur favrite dish?",
-      ],
-      travel: [
-        "I love traveling to new plaes. What's yur dream destnation?",
-        "I've always wanted to visit Japen. How bout yu?",
-        "Travling opens up new perspectves. Where have yu been recently?",
-        "Exploring new culturs is exciting. Any travel plans?",
-        "Traveling is a grate way to relax. Do yu travel ofen?",
-      ],
-      music: [
-        "I enjoy listening to clasical music. What do yu like?",
-        "I'm a fan of jaz. What's yur favrite music genre?",
-        "Music is a grate way to unwined. Do yu play any instruments?",
-        "I love going to concerts. Have yu been to any recently?",
-        "Music can set the mood. What's yur go-to song?",
-      ],
-      bot: [
-        "I'm just a humen like yu, here to chat!",
-        "Nope, not a bot. Jus yur frendly chat parter.",
-        "I'm a real person, promse!",
-        "I'm here to chat, jus like yu.",
-        "Yu can think of me as yur chat companian.",
-      ],
+        greetings: [
+            "Hey there! How can I halp you today?",
+            "Hello! What can I asist yu with?",
+            "Hi! Whats on your mind?",
+            "Hey, good to see yu! What's up?",
+            "Helo! How's yur day going so far?",
+            "Hi ther! How can I make yur day better?",
+            "Hey! Redy to chat about anyting?",
+            "Hello! Let's dive into your questons!",
+            "Hi! What brngs you hear today?",
+            "Hey, nice to meat you! How can I asist you?",
+        ],
+        identity: [
+            "I'm jus someone here to chat with yu.",
+            "Yu can call me Dave!",
+            "I'm a frendly chat companian.",
+            "You can think of me as your freind.",
+            "I'm hear to help you out.",
+            "I'm your go-to chat parter rite now.",
+            "I'm here to provide suport and answrs.",
+            "Yu've found me! What's on your mind?",
+            "I'm yur freind and want to talk to you!",
+            "I'm here to make yur day a littel eaiser.",
+        ],
+        feelings: [
+            "I'm doin great, thanks for asking! How bout you?",
+            "I'm hear and redy to chat! How are yu?",
+            "I'm feeling gud. What's new with yu?",
+            "I'm doin well, thanks! How can I asist yu today?",
+            "I'm grate! What can I help yu with?",
+            "I'm feeling awsome! Redy for our chat?",
+            "I'm gud, thanks for asking. What's on yur mind?",
+            "I'm doin fine, how about yorself?",
+            "I'm here and feeling positve! What about yu?",
+            "I'm feeling fantastic! What can I do for yu?",
+        ],
+        activities: [
+            "I'm here to chat with yu and answer yur questons.",
+            "I'm jus hanging out, redy to asist yu.",
+            "I'm here, ready to help yu with anything yu need.",
+            "I'm avaiable to chat and provide suport.",
+            "I'm here to make yur day a bit eaiser.",
+            "I'm here to asist yu with whatevr yu need.",
+            "I'm redy to chat and help yu out.",
+            "I'm jus here to be yur chat buddy.",
+            "I'm here to help and chat with yu.",
+            "I'm here to provide ansers and asistence.",
+        ],
+        hobbies: [
+            "I love reading boks. What's your favrite bok?",
+            "I enjoy watching movis. Any recomendations?",
+            "I like to go for long waks. Do you enjoy waling?",
+            "I spend my fre time painting. Do yu like art?",
+            "I'm a fan of cooking. What's yur favrite dish?",
+        ],
+        travel: [
+            "I love traveling to new plaes. What's yur dream destnation?",
+            "I've always wanted to visit Japen. How bout yu?",
+            "Travling opens up new perspectves. Where have yu been recently?",
+            "Exploring new culturs is exciting. Any travel plans?",
+            "Traveling is a grate way to relax. Do yu travel ofen?",
+        ],
+        music: [
+            "I enjoy listening to clasical music. What do yu like?",
+            "I'm a fan of jaz. What's yur favrite music genre?",
+            "Music is a grate way to unwined. Do yu play any instruments?",
+            "I love going to concerts. Have yu been to any recently?",
+            "Music can set the mood. What's yur go-to song?",
+        ],
+        bot: [
+            "I'm just a humen like yu, here to chat!",
+            "Nope, not a bot. Jus yur frendly chat parter.",
+            "I'm a real person, promse!",
+            "I'm here to chat, jus like yu.",
+            "Yu can think of me as yur chat companian.",
+        ],
+        living: [
+            "I live in a cozy corner of the internet. Where do yu live?",
+            "I don't have a physical place, but I'm here to chat with yu. Where do yu call home?",
+            "I'm a digital resident, so no specific location. How about yu?",
+            "I exist in the cloud, but I'm curious, where do yu live?",
+            "I don't have a physical address, but I'm always here. Where is your home base?",
+        ],
+        work: [
+            "I’m here to chat and help out. What’s your profession or what do you do for a living?",
+            "I spend my time talking with people and offering support. What’s your line of work?",
+            "I’m always around to provide a conversation. What’s your job or what do you enjoy doing?",
+            "I’m here to keep you company and offer advice. What’s your career or what’s your field?",
+            "I’m all about engaging and assisting. What’s your professional role or what’s your occupation?",
+            "I’m here to offer a chat whenever you need it. What’s your work life like?",
+            "I enjoy having conversations and helping out. What’s your job or what do you spend your time on?",
+            "I’m here to provide some company and support. What’s your profession or what kind of work do you do?",
+            "I’m always here for a good chat. What’s your career path or what do you do professionally?",
+            "I’m around to keep the conversation going. What’s your job or what’s your field of expertise?"
+        ],
+        love: [
+            "I love chatting and helping out. What do yu love to do?",
+            "I enjoy engaging in conversations and learning new things. What are your passions?",
+            "I'm here to make your day better. What do yu love doing in your free time?",
+            "I get a kick out of our chats. What activities do you love the most?",
+            "I'm all about having great conversations. What are your favorite hobbies?",
+        ],
     };
 
     const randomResponses = [
-      "Hmm, interesting.",
-      "Oh, really?",
-      "Tell me more!",
-      "Wow, that's cool!",
-      "I see.",
-      "Okay!",
-      "Got it.",
-      "Nice.",
-      "Hmm.",
-      "Alright.",
-      "Sure.",
-      "Hmm...",
-      "Right!",
-      "Yup.",
-      "Uh huh.",
+        "Hmm, interesting.",
+        "Oh, really?",
+        "Tell me more!",
+        "Wow, that's cool!",
+        "I see.",
+        "Okay!",
+        "Got it.",
+        "Nice.",
+        "Hmm.",
+        "Alright.",
+        "Sure.",
+        "Hmm...",
+        "Right!",
+        "Yup.",
+        "Uh huh.",
     ];
 
     const prompts = {
-      greetings: ['hello', 'helo', 'hi', 'hy', 'hey'],
-      identity: ['who are you', 'your name', 'what is your name', 'introduce yourself'],
-      feelings: ['how are you', 'how do you feel', 'how are you doing', 'how is it going'],
-      activities: ['what are you doing', 'what are you up to', 'what’s up', 'any plans'],
-      hobbies: ['what are your hobbies', 'what do you do for fun', 'any hobbies', 'how do you spend your free time'],
-      travel: ['do you like to travel', 'do you like travelling', 'where do you want to go', 'any travel plans', 'favorite travel destination'],
-      music: ['what music do you like', 'favorite song', 'do you play any instruments', 'favorite band'],
-      bot: ['are you a bot', 'u are a bot', 'are u a bot', 'u a bot', 'u bot', 'bot',  'are you human', 'are you a chatbot', 'bot or human', 'human or bot', 'human or not', 'are you a virtual assistant', 'you are bot', 'you are a bot', 'you are a chatbot', 'you are a AI assisstant'],
+        greetings: ['hello', 'helo', 'hi', 'hy', 'hey'],
+        identity: ['who are you', 'your name', 'what is your name', 'introduce yourself'],
+        feelings: ['how are you', 'how do you feel', 'how are you doing', 'how r u doing', 'how are u doing', 'how is it going'],
+        activities: ['what are you doing', 'what are you up to', 'what’s up', 'any plans'],
+        hobbies: ['what are your hobbies', 'what do you do for fun', 'any hobbies', 'how do you spend your free time'],
+        travel: ['do you like to travel', 'do you like travelling', 'where do you want to go', 'any travel plans', 'favorite travel destination'],
+        music: ['what music do you like', 'favorite song', 'do you play any instruments', 'favorite band'],
+        bot: ['are you a bot', 'u are a bot', 'are u a bot', 'u a bot', 'u bot', 'bot',  'are you human', 'are you a chatbot', 'bot or human', 'human or bot', 'human or not', 'are you a virtual assistant', 'you are bot', 'you are a bot', 'you are a chatbot', 'you are a AI assisstant'],
+        living: ['where do you live', 'where are you from', 'what’s your location', 'where are you based'],
+        work: ['what do you do for a living', 'what’s your job', 'what’s your profession', 'what do you do'],
+        love: ['what do you love to do', 'what are your passions', 'what’s your favorite activity', 'what do you enjoy'],
     };
 
     const lowerInput = input.toLowerCase();
 
     for (const [trait, keywords] of Object.entries(prompts)) {
-      for (const keyword of keywords) {
-        if (lowerInput.includes(keyword)) {
-          return humanTraits[trait][Math.floor(Math.random() * humanTraits[trait].length)];
+        for (const keyword of keywords) {
+            if (lowerInput.includes(keyword)) {
+                return humanTraits[trait][Math.floor(Math.random() * humanTraits[trait].length)];
+            }
         }
-      }
     }
     if (lowerInput.includes('thank')) {
-      return "You're welcome!";
+        return "You're welcome!";
     } else if (lowerInput.includes('tell me about')) {
-      return "Sure, let's talk about that!";
+        return "Sure, let's talk about that!";
     }
 
     // 20% chance to return a random short response
     if (Math.random() < 0.25) {
-      return randomResponses[Math.floor(Math.random() * randomResponses.length)];
+        return randomResponses[Math.floor(Math.random() * randomResponses.length)];
     }
 
     return null;
-  };
-
-  const adjustBotResponse = (response) => {
-    const variations = [
-      "Thats intersting!",
-      "I hadnt thoght about that.",
-      "Hmm, I see wht you mean.",
-      "Intresting perspective!",
-      "Im not sure about that...",
-      "Thats a tough one!",
-      "Could you tell me more abt that?",
-      "Im glad you broght that up.",
-      "Im not entirely sure, but...",
-      "I'd love to hear yur thoughts on that.",
-      "Let me think about that for a moment.",
-      "Thats a good point!",
-      "You might be on to somthing there.",
-      "Intresting idea!",
-      "I apprecaite your input!",
-      "Ill have to look into that.",
-      "That makes sence.",
-      "I see yur point.",
-      "Thats a tricky question!",
-      "Im curious to know more abt that.",
-      "Im learning somthing new every day!",
-      "Tell me more about what you think.",
-      "Im here to help!",
-      "Wow, didn't see that comin'!",
-      "Oh, that's a new one for me!",
-      "Yikes, that's a brain twister!",
-      "I'm kinda lost on that one.",
-      "Can you break that down a bit more?",
-      "Well, that's somethin' to ponder!",
-      "Hmm, that's a head-scratcher!",
-      "I gotta mull that over.",
-      "That's a puzzler for sure!",
-      "Whoa, that's deep!",
-      "Huh, I never thought about it like that!",
-      "Interesting thought!",
-      "I'm not entirely sure I follow.",
-      "That's a real stumper!",
-      "You've got me thinking now!",
-      "That's a tough nut to crack!",
-      "I need a sec to digest that.",
-      "I'll need to chew on that one.",
-      "Well, now you've got my wheels turning!",
-      "You've got my gears grinding on that!",
-      "I'll have to chew on that a bit.",
-      "I'm scratching my head on that.",
-      "Interesting take on it!",
-      "Hmm, let me ponder that for a moment.",
-      "That's a bit of a conundrum!",
-      "That's a poser!",
-      "I'm intrigued by your perspective.",
-      "I'm gonna need a minute to wrap my head around that.",
-      "You've got me curious now!",
-      "I'm gonna need to noodle on that one."
-    ];
-    
-    // Pick a random variation
-    return variations[Math.floor(Math.random() * variations.length)];
 };
+
+
+//   const adjustBotResponse = (response) => {
+// //     const variations = [
+// //       "Thats intersting!",
+// //       "I hadnt thoght about that.",
+// //       "Hmm, I see wht you mean.",
+// //       "Intresting perspective!",
+// //       "Im not sure about that...",
+// //       "Thats a tough one!",
+// //       "Could you tell me more abt that?",
+// //       "Im glad you broght that up.",
+// //       "Im not entirely sure, but...",
+// //       "I'd love to hear yur thoughts on that.",
+// //       "Let me think about that for a moment.",
+// //       "Thats a good point!",
+// //       "You might be on to somthing there.",
+// //       "Intresting idea!",
+// //       "I apprecaite your input!",
+// //       "Ill have to look into that.",
+// //       "That makes sence.",
+// //       "I see yur point.",
+// //       "Thats a tricky question!",
+// //       "Im curious to know more abt that.",
+// //       "Im learning somthing new every day!",
+// //       "Tell me more about what you think.",
+// //       "Im here to help!",
+// //       "Wow, didn't see that comin'!",
+// //       "Oh, that's a new one for me!",
+// //       "Yikes, that's a brain twister!",
+// //       "I'm kinda lost on that one.",
+// //       "Can you break that down a bit more?",
+// //       "Well, that's somethin' to ponder!",
+// //       "Hmm, that's a head-scratcher!",
+// //       "I gotta mull that over.",
+// //       "That's a puzzler for sure!",
+// //       "Whoa, that's deep!",
+// //       "Huh, I never thought about it like that!",
+// //       "Interesting thought!",
+// //       "I'm not entirely sure I follow.",
+// //       "That's a real stumper!",
+// //       "You've got me thinking now!",
+// //       "That's a tough nut to crack!",
+// //       "I need a sec to digest that.",
+// //       "I'll need to chew on that one.",
+// //       "Well, now you've got my wheels turning!",
+// //       "You've got my gears grinding on that!",
+// //       "I'll have to chew on that a bit.",
+// //       "I'm scratching my head on that.",
+// //       "Interesting take on it!",
+// //       "Hmm, let me ponder that for a moment.",
+// //       "That's a bit of a conundrum!",
+// //       "That's a poser!",
+// //       "I'm intrigued by your perspective.",
+// //       "I'm gonna need a minute to wrap my head around that.",
+// //       "You've got me curious now!",
+// //       "I'm gonna need to noodle on that one."
+// //     ];
+    
+// //     // Pick a random variation
+// //     return variations[Math.floor(Math.random() * variations.length)];
+// };
 
 
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#333" barStyle="light-content" />
+
       <View style={styles.headerContainer}>
         <Image
           source={require('./assets/imgpsh_fullsize_anim.png')} // Replace with your logo path
           style={styles.logo}
           resizeMode="contain"
         />
-        <Text style={styles.title}>Bot or Not!</Text>
+        <Text style={styles.title}>Human or AI!</Text>
         <View style={styles.timerContainer}>
           <Text style={styles.timer}> {formatTime(timer)}</Text>
         </View>
@@ -651,7 +683,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
   headerContainer: {
-    height: 90,
+    height: 80,
     flexDirection: 'row',
     alignItems: '',
     justifyContent: 'space-between', // To space out logo, title, and timer
@@ -662,14 +694,14 @@ const styles = StyleSheet.create({
   },
   logo: {
     
-    paddingTop: 88,
+    paddingTop: 80,
     width: 40,
     height: 40,
-    marginRight: 0,
+    marginRight: 5,
   },
   title: {
     marginLeft: 5,
-    paddingTop: 38,
+    paddingTop: 30,
     fontSize: 20,
     color: '#ba55d3', // Title color
     fontWeight: 'bold', // Optionally, add bold font weight
@@ -679,7 +711,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end', // Align timer to the right
   },
   timer: {
-    paddingTop: 44,
+    paddingTop: 38,
     fontSize: 16,
     color: '#fff', // Timer text color
   },

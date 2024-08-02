@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Bot or Not!",
-    "slug": "Hello",
-    "version": "1.0.0",
+    "name": "Human or AI!",
+    "slug": "human-or-ai",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/imgpsh_fullsize_anim.png",
     "userInterfaceStyle": "light",
@@ -19,23 +19,20 @@
         "foregroundImage": "./assets/imgpsh_fullsize_anim.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.abdurrehman1510980.Hello"
-      
+      "package": "com.abdurrehman1510980.Hello",
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      
       "eas": {
-        "projectId": "827d3837-563b-458c-90a6-74ca8c6e7dcc"
+        "projectId": "3fc2b51d-0916-4e55-806e-ec3daf9ad2cd"
       }
-    }
-      
     },
-    "react-native-google-mobile-ads": {
-    "android_app_id": "ca-app-pub-7037675035390273~8485653502"}
-
+    "owner": "kaizen_app"
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-7037675035390273~8485653502"
   }
-  
-
+}
